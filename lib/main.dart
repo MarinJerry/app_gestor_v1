@@ -62,37 +62,9 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     } else {
       setState(() {
-        _success = true;
+        _success = false;
       });
     }
-  }
-
-  Future<void> _showMyDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('AlertDialog Title'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('This is a demo alert dialog.'),
-                Text('Would you like to approve of this message?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Approve'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override
@@ -133,9 +105,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   alignment: Alignment.center,
                   padding: EdgeInsets.all(10),
                   child: Text(
-                    'YOQ',
+                    'NOVA',
                     style: TextStyle(
-                        color: Colors.blue,
+                        color: Colors.blueGrey,
                         fontWeight: FontWeight.w500,
                         fontSize: 30),
                   )),
@@ -143,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   alignment: Alignment.center,
                   padding: EdgeInsets.all(10),
                   child: Text(
-                    'Welcome',
+                    'Create Account',
                     style: TextStyle(fontSize: 20),
                   )),
               Container(
@@ -163,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: TextFormField(
                   obscureText: true,
                   controller: _passwordController,
@@ -179,20 +151,26 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 ),
               ),
-              FlatButton(
-                onPressed: () {
-                  //forgot password screen
-                },
-                textColor: Colors.blue,
-                child: Text('Forgot Password'),
-              ),
               Container(
                   height: 50,
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
                   child: RaisedButton(
                     textColor: Colors.white,
                     color: Colors.deepOrange,
-                    child: const Text('Login'),
+                    child: const Text('Create'),
+                    onPressed: () async {
+                      if (_formKey.currentState.validate()) {
+                        _register();
+                      }
+                    },
+                  )),
+              Container(
+                  height: 50,
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                  child: RaisedButton(
+                    textColor: Colors.white,
+                    color: Colors.deepOrange[300],
+                    child: const Text('Sign in'),
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
                         _register();
@@ -204,22 +182,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     ? ''
                     : (_success
                         ? 'Successfully registered ' + _userEmail
-                        : _showMyDialog())),
+                        : 'Upss, email already regitered')),
               ),
               Container(
                   child: Row(
                 children: <Widget>[
-                  Text('Does not have account?'),
-                  FlatButton(
-                    textColor: Colors.blue,
-                    child: Text(
-                      'Sign in',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    onPressed: () {
-                      //signup screen
-                    },
-                  )
+                  Text('NovaCode HN'),
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ))
@@ -227,58 +195,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-      // Center(
-      //   child: Builder(builder: (BuildContext context) {
-      //     return (Form(
-      //       key: _formKey,
-      //       child: Column(
-      //         crossAxisAlignment: CrossAxisAlignment.start,
-      //         children: <Widget>[
-      //           TextFormField(
-      //             controller: _emailController,
-      //             decoration: const InputDecoration(hintText: 'Email'),
-      //             validator: (String value) {
-      //               if (value.isEmpty) {
-      //                 return 'Please enter some text';
-      //               }
-      //               return null;
-      //             },
-      //           ),
-      //           TextFormField(
-      //             controller: _passwordController,
-      //             decoration: const InputDecoration(labelText: 'Password'),
-      //             validator: (String value) {
-      //               if (value.isEmpty) {
-      //                 return 'Please enter some text';
-      //               }
-      //               return null;
-      //             },
-      //           ),
-      //           Container(
-      //             margin: const EdgeInsets.all(16.0),
-      //             alignment: Alignment.center,
-      //             child: RaisedButton(
-      //               onPressed: () async {
-      //                 if (_formKey.currentState.validate()) {
-      //                   _register();
-      //                 }
-      //               },
-      //               child: const Text('Submit'),
-      //             ),
-      //           ),
-      //           Container(
-      //             alignment: Alignment.center,
-      //             child: Text(_success == null
-      //                 ? ''
-      //                 : (_success
-      //                     ? 'Successfully registered ' + _userEmail
-      //                     : 'Registration failed')),
-      //           )
-      //         ],
-      //       ),
-      //     ));
-      //   }),
-      // ),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         child: Container(
