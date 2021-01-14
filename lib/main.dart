@@ -229,9 +229,10 @@ class SecondRoute extends StatelessWidget {
       ),
       home: new Scaffold(
         appBar: new AppBar(
-          title: new Text('Fetch Data Example'),
+          title: new Text('Categorias de Comercio'),
         ),
         body: new Container(
+          padding: EdgeInsets.all(10),
           child: new FutureBuilder<List<User>>(
             future: fetchUsersFromGitHub(),
             builder: (context, snapshot) {
@@ -262,7 +263,7 @@ class SecondRoute extends StatelessWidget {
   }
 
   Future<List<User>> fetchUsersFromGitHub() async {
-    final response = await http.get('https://api.github.com/users');
+    final response = await http.get('https://yoqregistro.web.app/1003-1');
     print(response.body);
     List responseJson = json.decode(response.body.toString());
     List<User> userList = createUserList(responseJson);
@@ -272,8 +273,8 @@ class SecondRoute extends StatelessWidget {
   List<User> createUserList(List data) {
     List<User> list = new List();
     for (int i = 0; i < data.length; i++) {
-      String title = data[i]["login"];
-      int id = data[i]["id"];
+      String title = data[i]["nombre"];
+      String id = data[i]["id"];
       User user = new User(name: title, id: id);
       list.add(user);
     }
@@ -283,6 +284,6 @@ class SecondRoute extends StatelessWidget {
 
 class User {
   String name;
-  int id;
+  String id;
   User({this.name, this.id});
 }
